@@ -16,14 +16,14 @@ Window {
         width: 510
         height: 510
         anchors.centerIn: parent
-
         MouseArea
         {
             anchors.fill: parent
             onClicked: (mouse) => {
                            if(mouse.button === Qt.LeftButton)
-                            mySquare.color = "yellow"
+                            mySquare.color = "red"
                        }
+
             onDoubleClicked: (mouse) => {
                                  if(mouse.button === Qt.LeftButton)
                                     inCircle.start()
@@ -31,7 +31,7 @@ Window {
         }
     }
 
-    SequentialAnimation
+    ParallelAnimation
     {
         id: inCircle
         PropertyAnimation
@@ -41,5 +41,13 @@ Window {
             to: 250
             duration: 600
         }
+        PropertyAnimation
+        {
+            target: root
+            property: "color"
+            to: "white"
+            duration: 600
+        }
     }
+
 }
