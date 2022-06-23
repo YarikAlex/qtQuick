@@ -11,13 +11,15 @@ Window {
     color: "#30fc74"
 
     property color titleTextColor: "#07063b"
+    property string personHobby: ""
 
     Rectangle
     {
         id: personFrame
         width: root.width * (2/3)
         height: root.height *(2/3)
-        anchors.centerIn: parent
+        x: root.width/6
+        y: root.height/6
         radius: 10
         color: "#c0fad4"
 
@@ -152,18 +154,21 @@ Window {
                 leftPadding: 5
                 CheckBox
                 {
+                    id: checkSport
                     checked: false
                     text: qsTr("Спорт")
                     font.pointSize: 10
                 }
                 CheckBox
                 {
+                    id: checkMusic
                     checked: false
                     text: qsTr("Музыка")
                     font.pointSize: 10
                 }
                 CheckBox
                 {
+                    id: checkFilm
                     checked: false
                     text: qsTr("Кино")
                     font.pointSize: 10
@@ -175,18 +180,21 @@ Window {
                 leftPadding: 5
                 CheckBox
                 {
+                    id: checkGames
                     checked: false
                     text: qsTr("Дота")
                     font.pointSize: 10
                 }
                 CheckBox
                 {
+                    id: checkProgram
                     checked: false
                     text: qsTr("Программирование")
                     font.pointSize: 10
                 }
                 CheckBox
                 {
+                    id: checkSerial
                     checked: false
                     text: qsTr("Сериалы")
                     font.pointSize: 10
@@ -228,10 +236,10 @@ Window {
         id: partnerFrame
         width: root.width * (2/3)
         height: root.height *(2/3)
-        anchors.centerIn: parent
+        x: 0 - width
+        y: root.height/6
         radius: 10
         color: "#c0fad4"
-        opacity: 0
         Text {
             id: partnerTitle
             text: qsTr("Кого будем искать?")
@@ -350,6 +358,7 @@ Window {
                     checked: false
                     text: qsTr("Спорт")
                     font.pointSize: 10
+
                 }
                 CheckBox
                 {
@@ -388,41 +397,64 @@ Window {
                 }
             }
         }
-//        Button
-//        {
-//            id: registration
-//            anchors.bottom: parent.bottom
-//            anchors.bottomMargin: 10
-//            anchors.horizontalCenter: parent.horizontalCenter
-//            text: qsTr("Регистрация")
-//            width: 150
-//            height: 50
-//            background: Rectangle
-//            {
-//                radius: 20
-//                color: "#30fc74"
-//            }
-//            font.family: "Helvetica"
-//            font.pointSize: 12
-//        }
+        Button
+        {
+            id: registration
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 10
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: qsTr("Регистрация")
+            width: 150
+            height: 50
+            background: Rectangle
+            {
+                radius: 20
+                color: "#30fc74"
+            }
+            font.family: "Helvetica"
+            font.pointSize: 12
+            onClicked: readData()
+        }
     }
 
-    SequentialAnimation
+    ParallelAnimation
     {
         id: changeFrame
         PropertyAnimation
         {
             target: personFrame
-            property: "opacity"
-            to: 0
-            duration: 100
+            property: "x"
+            to: root.width
+            duration: 1000
         }
         PropertyAnimation
         {
             target: partnerFrame
-            property: "opacity"
-            to: 100
-            duration: 100
+            property: "x"
+            to: root.width/6
+            duration: 1000
+        }
+    }
+
+    function readData()
+    {
+        isCheck()
+        let nameDate = "Имя: " + nameField.text + " Возраст: "+ ageField.text
+        let genderData = "Пол: " + genderBox.currentText
+        let cityData = "Город: " + cityField.text
+        let educationData = "Образование: " + educationBox.currentText
+        let hobbyData = "Хобби: " + personHobby
+        let someInfo = "О себе: "+ informationField.text
+
+        print(nameDate + " " + genderData + " " + cityData + " " + educationData + " " + hobbyData + " " +someInfo)
+        print("Ищет " + genderPartnerBox.currentText + " от " + startAge.text + " до " + finishAge.text + " " + educationPartnerBox.currentText)
+    }
+
+    function isCheck()
+    {
+        if(checkSport.checkState === Qt.Checked)
+        {
+          personHobby = checkSport.text
         }
     }
 }
