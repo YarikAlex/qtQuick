@@ -21,7 +21,7 @@ Window {
             anchors.fill: parent
             onClicked: (mouse) => {
                            if(mouse.button === Qt.LeftButton)
-                            mySquare.color = "red"
+                            mySquare.color = getRandomHexValue()
                        }
 
             onDoubleClicked: (mouse) => {
@@ -49,5 +49,10 @@ Window {
             duration: 600
         }
     }
+
+    function getRandomHexValue() {
+        return '#' + Math.floor(Math.random() * 16777215).toString(16);
+    }
+
 
 }
