@@ -16,28 +16,28 @@ Window {
             id: books
             ListElement
             {
-                icon: ""
+                icon: ":/img/witcherIcon.jpeg"
                 title: "Witcher"
                 genre: "Fantasy"
                 author: "A. Sapkowski"
             }
             ListElement
             {
-                icon: ""
+                icon: ":/img/GameOfThroneIcon.png"
                 title: "Game of Throns"
                 genre: "Fantasy"
                 author: "J.R.R. Martin"
             }
             ListElement
             {
-                icon: ""
+                icon: ":/img/IceDragonIcon.jpg"
                 title: "Ice Dragon"
                 genre: "Fantasy"
                 author: "J.R.R. Martin"
             }
             ListElement
             {
-                icon: ""
+                icon: ":/img/theHostIcon.jpg"
                 title: "The Host"
                 genre: "Fantasy"
                 author: "S. Meyer"
@@ -45,7 +45,7 @@ Window {
 
             ListElement
             {
-                icon: ""
+                icon: ":/img/infernoIcon.jpeg"
                 title: "Inferno"
                 genre: "Detective"
                 author: "D. Brown"
@@ -53,12 +53,11 @@ Window {
 
             ListElement
             {
-                icon: ""
+                icon: ":/img/1984Icon.jpeg"
                 title: "1984"
                 genre: "Anti-utopia"
                 author: "D. Orwell"
             }
-
         }
 
         ListView
@@ -85,8 +84,8 @@ Window {
                 color: "black"
                 Text {
                     anchors.centerIn: parent
-                    text: qsTr("FOOTER")
-                    font.pointSize: 12
+                    text: qsTr("Developer: Alexander Yaroslavtcev from Saint-Petersburg")
+                    font.pointSize: 10
                     color: "white"
                 }
             }
@@ -106,30 +105,44 @@ Window {
             delegate: Rectangle
             {
                 width: listBooks.width
-                height: 50
+                height: 60
                 color: "grey"
                 border.width: 1
                 border.color: "black"
                 MouseArea
                 {
                     anchors.fill: parent
+
                 }
                 Column
                 {
-                    anchors.fill: parent
+                    anchors.left: parent.left
+                    Image
+                    {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        width: 30
+                        height: 30
+                        source: icon
+                        fillMode: Image.PreserveAspectFit
+                    }
+                }
+
+                Column
+                {
+                    anchors.left: parent.horizontalCenter
                     Row
                     {
                         anchors.horizontalCenter: parent.horizontalCenter
                         Text{text: "Title:"; font.weight: Font.Bold; font.family: "Calibri"; font.pixelSize: 16}
                         Text{text: title; font.italic: true; font.family: "Calibri"; font.pixelSize: 16}
-                        spacing: 20
+                        spacing: 10
                     }
                     Row
                     {
                         anchors.horizontalCenter: parent.horizontalCenter
                         Text{text: "Author:"; font.weight: Font.Bold; font.family: "Calibri"; font.pixelSize: 16}
                         Text{text: author; font.italic: true; font.family: "Calibri"; font.pixelSize: 16}
-                        spacing: 20
+                        spacing: 10
                     }
                 }
 
