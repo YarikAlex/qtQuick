@@ -123,16 +123,12 @@ Window {
         color: "lightGrey"
         opacity: 0
         radius: 20
-        property string greetingTextFullOpacityState: "full"
-        property string greetingTextNonOpacityState: "non"
-        property string searchTextNonOpacityState: "non"
-        property string searchTextFullOpacityState: "full"
 
         MouseArea
         {
             id: area
             anchors.fill: parent
-//            onClicked:
+            onClicked: greetingTextAnimation.start()
         }
 
         Column
@@ -146,18 +142,7 @@ Window {
                 text: "You've successfully logged in"
                 font.family: "Helvetica"
                 font.pixelSize: 20
-                state: greetingTextFullOpacityState
-
-                states: [
-                    State {
-                    name: "greetingTextNonOpacityState"
-                    PropertyChanges { target: greetingText; opacity: 0}
-                    },
-                    State {
-                    name: "greetingTextFullOpacityState"
-                    PropertyChanges { target: greetingText; opacity: 100}
-                    }
-                ]
+                opacity: 100
             }
             Text {
                 id: continueText
@@ -165,6 +150,7 @@ Window {
                 text: "click to continue"
                 font.family: "Helvetica"
                 font.pixelSize: 10
+                opacity: 100
             }
 
             TextField
@@ -174,17 +160,7 @@ Window {
                 height: 30
                 anchors.horizontalCenter: parent.horizontalCenter
                 placeholderText: qsTr("Search")
-                state: searchTextNonOpacityState
-                states: [
-                    State {
-                    name: "searchTextNonOpacityState"
-                    PropertyChanges { target: searchText; opacity: 0}
-                    },
-                    State {
-                    name: "searchTextFullOpacityState"
-                    PropertyChanges { target: searchText; opacity: 100}
-                    }
-                ]
+                opacity: 0
             }
             Button
             {
@@ -198,15 +174,26 @@ Window {
                      font.family: "Helvetica"
                      font.pixelSize: 12
                 }
+                opacity: 0
                 anchors.horizontalCenter: parent.horizontalCenter
                 background: Rectangle
                 {
                     color: "black"
                     radius: 20
                 }
+                onClicked: {
+                    busySearch.running = true
+                }
             }
         }
     }
+
+    BusyIndicator {
+        id: busySearch
+        anchors.centerIn: parent
+        running: false
+    }
+
 
     ParallelAnimation
     {
@@ -239,6 +226,25 @@ Window {
             property: "x"
             to: 0
             duration: 1000
+        }
+    }
+
+    ParallelAnimation
+    {
+        id: greetingTextAnimation
+        PropertyAnimation
+        {
+            targets: [greetingText, continueText]
+            property: "opacity"
+            to: 0
+            duration: 500
+        }
+        PropertyAnimation
+        {
+            targets: [searchText, findButton]
+            property: "opacity"
+            to: 100
+            duration: 500
         }
     }
 }
